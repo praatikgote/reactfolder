@@ -114,6 +114,7 @@ function AddPost() {
                 <label> Post Category </label>
                 <select className="form-control" value={category}
                     onChange={(e) => { setcategory(e.target.value) }}>
+                      
                     <option> Business </option>
                     <option> Charity </option>
                     <option> Sponsorship </option>

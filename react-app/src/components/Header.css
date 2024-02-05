@@ -1,6 +1,7 @@
 .header{
     /*height: 60px;*/
     height: 60px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;  
 
 }
     
@@ -20,20 +21,42 @@
 
 .search {
     margin-left: 50px;
+    margin-top: 10px;
     outline: none;
     padding-left: 10px;
-    width: 200px;
+    width: 300px;
     height: 44px;
     border: 2px solid #002f34;
     border-radius: 4px 0px 0px 4px;
 }
 
 .search-btn {
-    height: 44px;
+    height: 60px;
     background-color: #002f34;
     color: #fff;
     border-radius: 0px 4px 4px 0px;
     outline: none;
     border: none;
     padding: 0px 15px;
+}
+
+
+.search-btn {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* No border */
+    color: white; /* White text */
+    padding: 15px 32px; /* Padding around the text */
+    text-align: center; /* Center-align text */
+    text-decoration: none; /* No underline on text */
+    display: inline-block; /* Inline-block display */
+    font-size: 16px; /* Medium text size */
+    margin: 4px 2px; /* Margin around the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 8px; /* Rounded corners */
+    transition-duration: 0.4s; /* Transition effect duration */
+}
+
+.search-btn:hover {
+    background-color: #45a049; /* Darker shade of green on hover */
+    color: white; /* Text color remains white */
 }

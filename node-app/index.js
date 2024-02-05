@@ -27,7 +27,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 mongoose.connect('mongodb+srv://user1:pratik@cluster0.76piy4i.mongodb.net/?retryWrites=true&w=majority' );
 
-const Users = mongoose.model('Users', { username: String , password: String });
+const Users = mongoose.model('Users', { 
+  username: String , 
+  password: String ,
+  likedPost : [{type: mongoose.Schema.Types.ObjectId, ref: 'Post' } ]
+
+});
 
 const Post = mongoose.model('Post', { business_name: String , business_owner_name: String , business_id: String , category : String , address : String , phone_number : String , required_funding : String , total_funding : String , about_business : String , termsandconditions : String , pimage : String });
 
@@ -37,10 +42,20 @@ app.get('/', (req, res) => {
 })
 
 
-app.post('/add-post', upload.single('pimage') , (req, res) => {
-  console.log(req.body);
-  console.log(req.file.path);
+app.post('/liked-post', (req, res) => {
+      let postId = req.body.postId;
+      let userId = req.body.userId;
+      Users.updateOne({ _id: userId }, { $addToSet: {likedPost: postId  } }) 
+      .then(() => { 
+          res.send({ message: 'liked success.' })
 
+      })   
+      .catch(() => {
+          res.send({ message: 'server err' })
+       })
+})
+
+app.post('/add-post', upload.single('pimage') , (req, res) => {
   const business_name = req.body.business_name;
   const business_owner_name = req.body.business_owner_name;
   const business_id = req.body.business_id;
@@ -72,19 +87,26 @@ app.post('/add-post', upload.single('pimage') , (req, res) => {
 
 
 app.get('/get-post' , (req , res) => {
-
-
   Post.find()
   .then((result)=>{
-
-    console.log(result , 'user-data');
+   
     res.send({message: 'success' , post : result});
-
   })
   .catch((err) => {
-
     res.send({message: 'Server err'})
+  })
+})
 
+
+
+app.post('/liked-post' , (req , res) => {
+
+  Users.findOne({ _id : req.body.userId}).populate('likedPost')
+  .then((result)=>{
+    res.send({message: 'success' , post : result.likedPost});
+  })
+  .catch((err) => {
+    res.send({message: 'Server err'})
   })
 
 })
@@ -92,7 +114,7 @@ app.get('/get-post' , (req , res) => {
 
 app.post('/signup', (req, res)=> {
 
-  console.log(req.body);
+ 
 
   const username = req.body.username;
   const password = req.body.password;
@@ -119,7 +141,7 @@ app.post('/signup', (req, res)=> {
 
 app.post('/login', (req, res)=> {
 
-  console.log(req.body);
+ 
 
   const username = req.body.username;
   const password = req.body.password;
@@ -128,7 +150,7 @@ app.post('/login', (req, res)=> {
  Users.findOne({username : username})
 
          .then((result) => {
-             console.log(result , "user data") 
+            
 
              if(!result){
               res.send({message: 'User Not Found '})
@@ -141,7 +163,7 @@ app.post('/login', (req, res)=> {
                       data: result
                     }, 'MYKEY', { expiresIn: '1h'});
 
-                     res.send({message: 'Find Success ' , token : token})
+                     res.send({message: 'Find Success ' , token : token , userId: result._id})
                }
 
                if(result.password != password){

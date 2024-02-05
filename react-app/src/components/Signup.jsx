@@ -11,8 +11,6 @@ import { useState } from "react";
 
 
 
-
-
 function Signup() {
 
  const [username , setusername] = useState('');
@@ -90,7 +88,7 @@ const handleApi = () =>{
               <button onClick={handleApi} type="submit">signup</button>
             </div>
             <div className="login-link">
-              Nmember? <Link to="/login">Login</Link>
+              Nmember? <Link to="/login">Login</Link>  
             </div>
           </form>
         </div>

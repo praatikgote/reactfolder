@@ -9,7 +9,7 @@ import './Home.css';
 import { faPersonBreastfeeding } from "@fortawesome/free-solid-svg-icons";
 
 
-function Home() {
+function LikedPost() {
 
  
   const navigate = useNavigate();
@@ -27,8 +27,9 @@ function Home() {
 
 
    useEffect(() => {
-    const url = 'http://localhost:4000/get-post';    //API_URL + '/get-products';
-    axios.get(url)
+    const url = 'http://localhost:4000/liked-post';    //API_URL + '/get-post';
+    let data = { userId : localStorage.getItem('userId') }
+    axios.post(url,data)
         .then((res) => {          
             if (res.data.post) {
                 setpost(res.data.post);
@@ -72,8 +73,9 @@ const handleCategory = (value) =>{
 
 
 const handelLike = (postId) => {
+
   let userId = localStorage.getItem('userId')
-  console.log('userId' , "postId" , postId, userId);
+  console.log('userId' , 'postId' , userId , postId);
   const url = 'http://localhost:4000/liked-post';    //API_URL + '/like-post';
   const data = {userId , postId}
     axios.post(url,data)
@@ -113,15 +115,13 @@ const handelLike = (postId) => {
                 <IoHeart className="icons"/> 
                 </div> 
               
-                 <img width="300px" height="150px" src={'http://localhost:4000/' + item.pimage} />
+                 <img width="370px" height="200px" src={'http://localhost:4000/' + item.pimage} />
                  <h3 className="m-2 business-name-text"> {item.business_name}  </h3>
                  <p className="m-2 business-owner-name"> {item.business_owner_name}  | {item.business_id}  | {item.phone_number} </p>
                  <p className="m-2 category-text"> {item.category}  </p>
                  <p className="m-2 text-success"> {item.address} </p>
                  <h5 className="m-2 required-funding-text"> Required-Funding:-  {item.required_funding}$  </h5>    
                  <h5 className="m-2 total-funding-text">Total-Funding:- {item.total_funding}$</h5>
-                 
-                            
                 </div>
         )
 
@@ -138,13 +138,14 @@ const handelLike = (postId) => {
                 <div onClick = {() => handelLike(item._id)} className="icon-con">
                 <IoHeart className="icons"/> 
                 </div>         
-                 <img width="300px" height="150px" src={'http://localhost:4000/' + item.pimage} />
+                
+                 <img width="370px" height="200px" src={'http://localhost:4000/' + item.pimage} />
                  <h3 className="m-2 business-name-text"> {item.business_name}  </h3>
                  <p className="m-2 business-owner-name"> {item.business_owner_name}  | {item.business_id}  | {item.phone_number} </p>
                  <p className="m-2 category-text"> {item.category}  </p>
                  <p className="m-2 text-success"> {item.address} </p>
-                 <h5 className="m-2 required-funding-text"> Req-Funds:-  {item.required_funding}$  </h5>    
-                 <h5 className="m-2 total-funding-text">Total-Funds:- {item.total_funding}$</h5>
+                 <h5 className="m-2 required-funding-text"> Required-Funding:-  {item.required_funding}$  </h5>    
+                 <h5 className="m-2 total-funding-text">Total-Funding:- {item.total_funding}$</h5>
                 </div>
         )
       })}
@@ -156,4 +157,4 @@ const handelLike = (postId) => {
     )
   }
   
-  export default Home;
+  export default LikedPost;

@@ -15,6 +15,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import AddPost from './components/AddPost';
+import LikedPost from './components/LikedPost';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
   {
     path: "/add-post",
     element: (<AddPost />),
+  },
+
+  {
+    path: "/liked-post",
+    element: (<LikedPost />),
   },
 
 
